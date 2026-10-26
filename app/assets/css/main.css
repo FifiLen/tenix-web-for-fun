@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+/* ───────── Tokeny ───────── */
+@theme {
+  /* Pliki fontów dociąga @nuxt/fonts (nuxt.config.ts → fonts). */
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --color-ink: #14112a;        /* głęboki indygo z paska tenix.eu – tekst i ciemne sekcje */
+  --color-ink-raised: #1e1a3a;
+  --color-line-dark: #2e2a52;
+  --color-paper: #f2f2ef;      /* tło strony */
+  --color-stage: #e6e6e0;      /* tło sekcji z makietą – ciemniejsze, żeby biała „glina” odcinała się od tła */
+  --color-line: #dcdcd5;
+  --color-muted: #57546c;
+  --color-muted-dark: #a9a6c3;
+  --color-accent: #ffb548;     /* bursztyn z logo Tenix – energia, impulsy */
+  --color-ok: #2fbf71;         /* gotowy do odjazdu / ładowarka OK */
+  --color-alert: #ff5b4a;      /* przerwane ładowanie */
+
+  --text-h1: clamp(3rem, 7.4vw, 7.5rem);
+  --text-h1--line-height: 0.92;
+  --text-h1--letter-spacing: -0.045em;
+
+  --text-h2: clamp(2.25rem, 4.4vw, 4.25rem);
+  --text-h2--line-height: 0.98;
+  --text-h2--letter-spacing: -0.035em;
+
+  --text-lead: clamp(1.75rem, 3.3vw, 3.25rem);
+  --text-lead--line-height: 1.1;
+  --text-lead--letter-spacing: -0.03em;
+
+  --text-figure: clamp(4.5rem, 9vw, 9rem);
+  --text-figure--line-height: 0.85;
+  --text-figure--letter-spacing: -0.05em;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ───────── 12 kolumn na pełną szerokość + 20 px marginesu po bokach ─────────
+   Linie: 1 = lewa krawędź, 2–13 = kolumny treści, 14 = koniec treści, 15 = prawa krawędź. */
+@utility grid-site {
+  display: grid;
+  grid-template-columns:
+    1.25rem
+    repeat(12, minmax(0, 1fr))
+    1.25rem;
+  column-gap: 0;
+
+  @media (width >= 64rem) {
+    grid-template-columns: 0 repeat(12, minmax(0, 1fr)) 0;
+    column-gap: 1.25rem;
+  }
+}
+
+/* szkło nad sceną: rozmyte tło, bez ramek – teksty czytelne, makieta pod nimi nie jest ucinana */
+@utility glass {
+  background: rgb(230 230 224 / 0.68);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  backdrop-filter: blur(14px) saturate(1.1);
+}
+
+/* ───────── Baza ───────── */
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.55;
+    overflow-x: clip;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      transition-delay: 0ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
